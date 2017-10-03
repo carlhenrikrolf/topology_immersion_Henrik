@@ -1,0 +1,25 @@
+distance matrix with 20 points
+value range: [0.273555,2.80161]
+persistence intervals in dim 0:
+ [0,0.273555)
+ [0,0.442539)
+ [0,0.445738)
+ [0,0.515841)
+ [0,0.584052)
+ [0,0.651514)
+ [0,0.652457)
+ [0,0.730392)
+ [0,0.747932)
+ [0,0.750537)
+ [0,0.886206)
+ [0, )
+ [0, )
+ [0, )
+ [0, )
+ [0, )
+ [0, )
+ [0, )
+ [0, )
+ [0, )
+persistence intervals in dim 1:
+persistence intervals in dim 2:
