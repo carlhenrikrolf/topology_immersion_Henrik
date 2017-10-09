@@ -1,7 +1,10 @@
-def ripser_to_dict(file,thr):
+# just some text
+import numpy as np
+
+def ripser_to_dict(file,params):
+    thr = params['max_persistence']
     data = dict()
     data['file'] = file
-    
 
     with open(file, 'r') as f:
         
@@ -13,7 +16,7 @@ def ripser_to_dict(file,thr):
         # second line
         line = f.readline()
         word = line.split(' ')
-        data['range'] = 'not implemented' #[float(w) for w in word[2][1:-2].split]
+        data['range'] = [float(w) for w in word[2][1:-2].split(',')] #'not implemented' 
 
         # parse until the end of the line
         for line in f:
@@ -29,6 +32,8 @@ def ripser_to_dict(file,thr):
                     word_2 = thr
                 else:
                     word_2 = float(word[1][:-2])
+                    if word_2 > thr:
+                        print('max_persistence is too small')
                 data[key].append([float(word[0][2:]),word_2])
             
     # post processing
@@ -42,4 +47,4 @@ def ripser_to_dict(file,thr):
         for k in temp:
             data.pop(k)
         
-        return data
+    return data
