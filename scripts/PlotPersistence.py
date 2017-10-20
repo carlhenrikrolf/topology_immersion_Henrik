@@ -3,6 +3,8 @@ import numpy as np
 
 def plot_persistence(data,params):
     
+    """Arguments in are (0) a dictionary and (1) parameters"""
+    
     # Extract parameters
     dim = params['dim']
     thr = params['max_persistence']
