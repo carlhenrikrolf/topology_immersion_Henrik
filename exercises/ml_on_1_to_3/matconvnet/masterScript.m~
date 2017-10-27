@@ -1,6 +1,6 @@
 %% Running MatConvNet
 %% Start of the day
-run /Applications/MatConvNet/matlab/vl_setupnn.m;
+run /Applications/m
 
 %% Restart
 reply = input('Do you want to remove the latest run? Y/N [Y]:','s');

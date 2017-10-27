@@ -25,7 +25,7 @@ opts.train = [] ;
 opts.val = [] ;
 opts.gpus = [] ;
 opts.prefetch = false ;
-opts.numEpochs = 300 ;
+opts.numEpochs = 300 ; % 300
 opts.learningRate = 0.001 ;
 opts.weightDecay = 0.0005 ;
 opts.momentum = 0.9 ;
@@ -83,7 +83,7 @@ if isstr(opts.errorFunction)
       hasError = false ;
     case 'multiclass'
       opts.errorFunction = @error_multiclass ;
-      if isempty(opts.errorLabels), opts.errorLabels = {'top1err', 'top5err'} ; end
+      if isempty(opts.errorLabels), opts.errorLabels = {'top1err'};end%, 'top5err'} ; end
     case 'binary'
       opts.errorFunction = @error_binary ;
       if isempty(opts.errorLabels), opts.errorLabels = {'binerr'} ; end

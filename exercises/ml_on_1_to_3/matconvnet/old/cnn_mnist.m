@@ -1,8 +1,6 @@
 function [net, info] = cnn_mnist(varargin)
 %CNN_MNIST  Demonstrates MatConvNet on MNIST
 
-% run(fullfile(fileparts(mfilename('fullpath')),...
-%   '..', '..', 'matlab', 'vl_setupnn.m')) ;
 
 opts.batchNormalization = false ;
 opts.network = [] ;
@@ -11,11 +9,11 @@ opts.networkType = 'simplenn' ;
 
 sfx = opts.networkType ;
 if opts.batchNormalization, sfx = [sfx '-bnorm'] ; end
-opts.expDir = fullfile('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/nn_export') ;%fullfile(vl_rootnn, 'data', ['mnist-baseline-' sfx]) ;
+opts.expDir = fullfile('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/nn_export') ;
 [opts, varargin] = vl_argparse(opts, varargin) ;
 
-opts.dataDir = fullfile('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds') ;%fullfile(vl_rootnn, 'data', 'mnist') ;
-opts.imdbPath = fullfile(opts.dataDir, 'imdb.mat');%fullfile(opts.expDir, 'imdb.mat');
+opts.dataDir = fullfile('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds') ;
+opts.imdbPath = fullfile(opts.dataDir, 'imdb.mat');
 opts.train = struct() ;
 opts = vl_argparse(opts, varargin) ;
 if ~isfield(opts.train, 'gpus'), opts.train.gpus = []; end;
@@ -87,7 +85,7 @@ inputs = {'input', images, 'label', labels} ;
 % --------------------------------------------------------------------
 function imdb = getMnistImdb(opts)
 % --------------------------------------------------------------------
-% Preapre the imdb structure, returns image data with mean image subtracted
+% Prepare the imdb structure, returns image data with mean image subtracted
 files = {'train-images-idx3-ubyte', ...
          'train-labels-idx1-ubyte', ...
          't10k-images-idx3-ubyte', ...
