@@ -1,0 +1,77 @@
+out = load('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/nn_export/net-epoch-1.mat');
+net = out.net;
+net.layers(end) = [];
+if ~isstruct(imdb)
+    imdb = load('expDir/vernier.mat');
+end
+trainSet = find(imdb.images.set == 2);
+r = randi([min(trainSet) max(trainSet)]);
+im = imdb.images.data(:,:,:,r);
+res = vl_simplenn(net,im);
+scores = squeeze(gather(res(end).x)) ;
+[bestScore, best] = max(scores) ;
+real = imdb.images.labels(r);
+msg = ['Net says ',num2str(best),', but reality says ',num2str(real)];
+disp(msg)
+imagesc(im)
+title(msg)
+%%
+reload = 1;
+nEpochs = 5;
+vernierAccuracy = zeros(nEpochs,1);
+crowdedAccuracy = zeros(nEpochs,1);
+for epoch = 1:nEpochs
+out = load(['expDir/net-epoch-',num2str(epoch),'.mat']);
+net = out.net;
+net.layers(end) = [];
+if reload
+    vernier = load('expDir/vernier.mat');
+end
+trainSet = find(vernier.images.set == 2);
+realVerniers = zeros(length(trainSet),1);
+classifiedVerniers = zeros(length(trainSet),1);
+i = 0;
+for r = trainSet
+    i = i +1;
+im = vernier.images.data(:,:,:,r);
+res = vl_simplenn(net,im);
+scores = squeeze(gather(res(end).x)) ;
+[bestScore, classifiedVerniers(i)] = max(scores) ;
+realVerniers(i) = vernier.images.labels(r);
+end
+vernierAccuracy(epoch) = accuracy(classifiedVerniers-1,realVerniers-1);
+
+% crowded
+if reload
+    crowded = load('expDir/crowded.mat');
+end
+trainSet = find(crowded.images.set == 2);
+realCrowded = zeros(length(trainSet),1);
+classifiedCrowded = zeros(length(trainSet),1);
+i = 0;
+for r = trainSet
+    i = i + 1;
+im = crowded.images.data(:,:,:,r);
+res = vl_simplenn(net,im);
+scores = squeeze(gather(res(end).x)) ;
+[bestScore, classifiedCrowded(i)] = max(scores) ;
+realCrowded(i) = crowded.images.labels(r);
+end
+crowdedAccuracy(epoch) = accuracy(classifiedCrowded-1,realCrowded-1);
+end
+tstAccs = [vernierAccuracy, crowdedAccuracy];
+save('expDir/tstAccs.mat','tstAccs')
+figure
+plot(1:nEpochs,vernierAccuracy,...
+    1:nEpochs,crowdedAccuracy)
+legend('vernier','crowded')
+title('test accuracy')
+%%
+clf
+vision = res(5).x;
+I = size(vision,3);
+sqrtI = ceil(sqrt(I));
+for i = 1:I
+subplot(sqrtI,sqrtI,i)
+imagesc(vision(:,:,i))
+end
