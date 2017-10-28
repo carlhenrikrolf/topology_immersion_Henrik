@@ -13,6 +13,7 @@ scores = squeeze(gather(res(end).x)) ;
 real = imdb.images.labels(r);
 msg = ['Net says ',num2str(best),', but reality says ',num2str(real)];
 disp(msg)
+figure(2)
 imagesc(im)
 title(msg)
 

@@ -30,3 +30,8 @@ Use ConvNet to process pixelated images, but start with a single layer.
 The idea is to use a neural network to classify these shapes.
 Maybe, this would be easier to do with the things I have in MATLAB.
 Could I use a SVM instead?
+
+Minor issues
+------------
+
+The ripser_to_dict cannot handle a dimension where no entries can be found. The temporary solution has been not to look at those dimensions.
