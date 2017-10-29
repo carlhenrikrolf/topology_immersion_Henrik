@@ -13,8 +13,8 @@ end
 
 %% Create the image database
 imdb = makeImdbs('net','mnist',...
-    'nSamples',2*5000,...
-    'nClasses',2);
+    'nSamples',3*5000,...
+    'nClasses',3);
 
 %% Save it
 cd ../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/;

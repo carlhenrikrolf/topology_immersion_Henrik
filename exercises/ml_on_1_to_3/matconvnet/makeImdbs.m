@@ -34,7 +34,7 @@ data = zeros(opts.imSize(1),...
 
 ind = 1;
 labels = zeros(1,opts.nSamples);
-for shape = {'circle','sphere'}%, 'torus'}
+for shape = {'circle','sphere', 'torus'}
     for sample = 1:(opts.nSamples/opts.nClasses) - 1
         data(:,:,:,ind) = csvread(['../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/',...
             char(shape),'/',num2str(sample),'.dat']);

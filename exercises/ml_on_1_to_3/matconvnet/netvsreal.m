@@ -1,4 +1,4 @@
-out = load('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/nn_export/net-epoch-20.mat');
+out = load('../../../../heavy_files/exercises/ml_on_1_to_3/pixelated_pds/nn_export/net-epoch-10.mat');
 net = out.net;
 net.layers(end) = [];
 if ~isstruct(imdb)
