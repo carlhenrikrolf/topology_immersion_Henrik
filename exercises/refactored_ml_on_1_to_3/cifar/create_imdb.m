@@ -3,36 +3,43 @@ function create_imdb(params)
 % which it saves
 
 %% Extracting some variables
-channel = params.architecture.channel;
-code_to_data = ['../', params.paths.code_to_data, 'pixelations/mnist/'];
-data_to_code = ['../../', params.paths.data_to_code, 'mnist'];
+channels = params.architecture.channels;
+code_to_data = ['../', params.paths.code_to_data, 'pixelations/cifar/'];
+data_to_code = ['../../', params.paths.data_to_code, 'cifar'];
 n_samples = params.matconvnet.n_samples;
 shapes = cellstr(params.shapes.names);
 
 train_ratio = params.matconvnet.train_ratio;
 val_ratio = params.matconvnet.val_ratio;
 
-%% loading dataset
-data = zeros(28,...
-    28,...
-    1,...
-    n_samples);
-ind = 1;
-labels = zeros(1,n_samples);
+n_subsamples = n_samples/length(shapes);
 
+%% loading dataset
+data = zeros(32,...
+    32,...
+    3,...
+    n_samples);
+sample_ind = 1;
+labels = zeros(1,n_samples);
 for shape_ind = 1:length(shapes)
-    for subsample = (1:(n_samples/length(shapes))) - 1
+    for subsample = (1:n_subsamples) - 1
         shape = shapes{shape_ind};
-        data(:,:,:,ind) = csvread([code_to_data,...
-            char(shape),'/',num2str(subsample),'-',num2str(channel),'.dat']);
-        if strcmp(shape,'circle')
-            labels(ind) = 1;
-        elseif strcmp(shape,'sphere')
-            labels(ind) = 2;
-        elseif strcmp(shape, 'torus')
-            labels(ind) = 3;
+        
+        channel_ind = 1;
+        for channel = channels
+            data(:,:,channel_ind,sample_ind) = csvread([code_to_data,...
+                char(shape),'/',num2str(subsample),'-',num2str(channel),'.dat']);
+            channel_ind = channel_ind + 1;
         end
-        ind = ind + 1;
+        
+        if strcmp(shape,'circle')
+            labels(sample_ind) = 1;
+        elseif strcmp(shape,'sphere')
+            labels(sample_ind) = 2;
+        elseif strcmp(shape, 'torus')
+            labels(sample_ind) = 3;
+        end
+        sample_ind = sample_ind + 1;
     end
 end
 
@@ -56,8 +63,9 @@ set(val_inds) = 2*ones(1,length(val_inds));
 images = struct('data',data,...
     'labels',labels,...
     'set',set);
+meta = struct('classes',{shapes});
 imdb = struct('images',images,...
-    'meta',[]);
+    'meta',meta);
 
 %% Save the file
 cd(code_to_data);
