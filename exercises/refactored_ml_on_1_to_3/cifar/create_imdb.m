@@ -43,6 +43,8 @@ for shape_ind = 1:length(shapes)
             labels(sample_ind) = 2;
         elseif strcmp(shape, 'torus')
             labels(sample_ind) = 3;
+        elseif strcmp(shape, 'mickey_mouse')
+            labels(sample_ind) = 4;
         end
         sample_ind = sample_ind + 1;
     end

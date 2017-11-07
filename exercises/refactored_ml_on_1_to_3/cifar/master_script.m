@@ -6,6 +6,7 @@ run /Applications/MatConvNet/matlab/vl_setupnn.m;
 params = load('../params.mat');
 code_to_data = ['../', params.paths.code_to_data, 'pixelations/cifar/'];
 data_to_code = ['../../', params.paths.data_to_code, 'cifar'];
+train = params.matconvnet.train;
 
 reply = input('Do you want to remove the latest run? Y/N [Y]:','s');
 if strcmp(reply,'Y')
@@ -26,5 +27,6 @@ reply = input('Train it? Y/N [Y]:','s');
 if strcmp(reply,'Y')
     cnn_cifar('expDir',[code_to_data,'nn_export/'],...
         'dataDir',code_to_data,...
-        'imdbPath',[code_to_data,'imdb.mat']);
+        'imdbPath',[code_to_data,'imdb.mat'],...
+        'train',train);
 end
