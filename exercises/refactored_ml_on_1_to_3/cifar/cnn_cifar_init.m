@@ -2,6 +2,10 @@ function net = cnn_cifar_init(varargin)
 opts.networkType = 'simplenn' ;
 opts = vl_argparse(opts, varargin) ;
 
+% Loading my own params
+params = load('../params.mat');
+nClasses = params.shapes.n_shapes;
+
 lr = [.1 2] ;
 
 % Define network CIFAR10-quick
@@ -56,7 +60,7 @@ net.layers{end+1} = struct('type', 'relu') ;
 
 % Block 5
 net.layers{end+1} = struct('type', 'conv', ...
-                           'weights', {{0.05*randn(1,1,64,3, 'single'), zeros(1,3,'single')}}, ...
+                           'weights', {{0.05*randn(1,1,64,nClasses, 'single'), zeros(1,nClasses,'single')}}, ...
                            'learningRate', .1*lr, ...
                            'stride', 1, ...
                            'pad', 0) ;

@@ -1,12 +1,10 @@
 # just some text
 import numpy as np
 
-def ripser_to_dict(file,params):
-    thr = params['ripser']['max_persistence']
-    data = dict()
-    data['file'] = file
+def ripser_to_dict(filename,thr):
+    data = {'file': filename}
 
-    with open(file, 'r') as f:
+    with open(filename, 'r') as f:
         
         # first line
         line = f.readline()
@@ -42,9 +40,9 @@ def ripser_to_dict(file,params):
         if v == []:
             temp.append(k)
         elif type(k) == int:
-            data[k] = np.array(v)
-            
-        for k in temp:
-            data.pop(k)
+            data[k] = np.array(v)     
+
+    for k in temp:
+        data.pop(k)
         
     return data
