@@ -37,6 +37,8 @@ for shape_ind = 1:length(shapes)
             channel_ind = channel_ind + 1;
         end
         
+        labels(sample_ind) = shape_ind;
+        %{
         if strcmp(shape,'circle')
             labels(sample_ind) = 1;
         elseif strcmp(shape,'sphere')
@@ -46,6 +48,7 @@ for shape_ind = 1:length(shapes)
         elseif strcmp(shape, 'mickey_mouse')
             labels(sample_ind) = 4;
         end
+        %}
         sample_ind = sample_ind + 1;
     end
 end

@@ -22,16 +22,13 @@ imdb = load([code_to_data, 'imdb.mat']);
 
 val_set = find(imdb.images.set == 2);
 output = zeros(n_shapes,n_shapes);
-check = 0;
-for val_sample = 1%val_set
+for val_sample = val_set
     im = imdb.images.data(:,:,:,val_sample);
     res = vl_simplenn(net,im);
-    res(end).x
     scores = squeeze(gather(res(end).x));
     [~, prediction] = max(scores);
     label = imdb.images.labels(val_sample);
     output(prediction,label) = output(prediction,label) + 1;
 end
 disp('prediction x label confusion matrix:')
-disp(check)
 disp(output)
